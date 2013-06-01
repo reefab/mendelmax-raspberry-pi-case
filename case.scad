@@ -695,12 +695,13 @@ module draw_case(bottom, top) {
     // ##########################################################################
     // ##########################################################################
  
-    if (bottom == 1)  // NIS Holder
+    case_spacing = 9;
+    if (bottom == 1) // Mounting tabs
     {
-        mount_tabs([5, -10, 0], 70);
-        mount_tabs([5 + 50, -10, 0], 110);
-        mount_tabs([5, 10 + box_l, 0], 290);
-        mount_tabs([5 + 50, 10 + box_l, 0], 250);
+        mount_tabs([5, - case_spacing, 0], 70);
+        mount_tabs([5 + 50,  - case_spacing, 0], 110);
+        mount_tabs([5, box_l + case_spacing, 0], 290);
+        mount_tabs([5 + 50, box_l + case_spacing, 0], 250);
     }
 
     difference() {
