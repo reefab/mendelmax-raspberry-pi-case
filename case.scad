@@ -61,7 +61,7 @@
 // **********************************************************************************
 
 // import_stl("VesaMount.stl", convexity = 5);
-use<write.scad>  // http://www.thingiverse.com/thing:16193
+//use<write.scad>  // http://www.thingiverse.com/thing:16193
 
 // **********************************************************************************
 
@@ -675,33 +675,36 @@ module remove_bottom() {
     translate(v = [split3, 20, -1]) cube([20       , box_l, casesplit+1], center = false);
 }
 
-module mount_tabs(central_point, rotation=0) {
-      translate([central_point[0], central_point[1], central_point[2]]) {
+module mount_tab(central_point, rotation=0) {
+    translate([central_point[0], central_point[1], central_point[2]]) {
         rotate(a=rotation, v=[0, 0, 1]) {
-          difference() {
-            union()
-            {
-              color("lightblue")  cylinder(r=10, h=box_thickness, $fn=20);
-              color("blue") translate([0,-10,0]) cube([14,20,box_thickness]);
-            }
-              cylinder(r=5/2, h=box_h+2, $fn=20);
-          }
+            screw_tab(20, 5, 20, box_thickness);
         }
-     }
+    }
+}
+
+module screw_tab(external_diameter, hole_size, tab_length, height)
+    difference() {
+        union()
+        {
+            color("lightblue")  cylinder(r=external_diameter/2, h=height, $fn=20);
+            color("blue") translate([0,-external_diameter/2,0]) cube([external_diameter, external_diameter, height]);
+        }
+        cylinder(r=hole_size/2, h=box_h+2, $fn=20);
     }
 
 module draw_case(bottom, top) {
 
     // ##########################################################################
     // ##########################################################################
- 
+
     case_spacing = 9;
     if (bottom == 1) // Mounting tabs
     {
-        mount_tabs([5, - case_spacing, 0], 70);
-        mount_tabs([5 + 50,  - case_spacing, 0], 110);
-        mount_tabs([5, box_l + case_spacing, 0], 290);
-        mount_tabs([5 + 50, box_l + case_spacing, 0], 250);
+        mount_tab([5, - case_spacing, 0], 70);
+        mount_tab([5 + 50,  - case_spacing, 0], 110);
+        mount_tab([5, box_l + case_spacing, 0], 290);
+        mount_tab([5 + 50, box_l + case_spacing, 0], 250);
     }
 
     difference() {
