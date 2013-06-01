@@ -110,7 +110,7 @@ bottomholes = true;
 bottomscrew = false;
 bottomfeet  = false;
 bottomsupport = true;         // Added extra support locations for pcb
-bottomclick   = true;
+bottomclick   = false;
 bottompcb    = false;		    // just a pcb holder without a top
 
 box_thickness = 2.0;            // minimum = 1.0
@@ -688,7 +688,7 @@ module screw_tab(external_diameter, hole_size, tab_length, height)
         union()
         {
             color("lightblue")  cylinder(r=external_diameter/2, h=height, $fn=20);
-            color("blue") translate([0,-external_diameter/2,0]) cube([external_diameter, external_diameter, height]);
+            color("blue") translate([0,-external_diameter/2,0]) cube([tab_length, external_diameter, height]);
         }
         cylinder(r=hole_size/2, h=box_h+2, $fn=20);
     }
@@ -699,12 +699,24 @@ module draw_case(bottom, top) {
     // ##########################################################################
 
     case_spacing = 9;
-    if (bottom == 1) // Mounting tabs
+    side_screw_size = 3;
+    if (bottom == 1)
     {
+        // Mounting tabs
         mount_tab([5, - case_spacing, 0], 70);
         mount_tab([5 + 50,  - case_spacing, 0], 110);
         mount_tab([5, box_l + case_spacing, 0], 290);
         mount_tab([5 + 50, box_l + case_spacing, 0], 250);
+        // Side bolts
+        translate([-4, box_l - 10, 0]) screw_tab(8, side_screw_size, 4, casesplit);
+        translate([box_w + 4, 10, 0]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, casesplit);
+    }
+
+    if (top == 1)
+    {
+        // Side bolts
+        translate([-4, box_l - 10, box_h - casesplit]) screw_tab(8, side_screw_size, 4, casesplit);
+        translate([box_w + 4, 10, box_h - casesplit]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, casesplit);
     }
 
     difference() {
