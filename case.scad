@@ -716,8 +716,8 @@ module draw_case(bottom, top) {
     if (top == 1)
     {
         // Side bolts
-        translate([-4, box_l - 10, casesplit]) screw_tab(8, side_screw_size, 4, Chdmi_h);
-        translate([box_w + 4, 10, casesplit]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, Chdmi_h);
+        translate([-4, box_l - 10, casesplit]) screw_tab(8, side_screw_size, 4, box_h - casesplit);
+        translate([box_w + 4, 10, casesplit]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, box_h - casesplit);
     }
 
     difference() {
