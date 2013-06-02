@@ -700,13 +700,14 @@ module draw_case(bottom, top) {
 
     case_spacing = 9;
     side_screw_size = 3;
+    extrusion_spacing = 50; // Misumi 20mm extrusion + 30mm spacing
     if (bottom == 1)
     {
         // Mounting tabs
         mount_tab([5, - case_spacing, 0], 70);
-        mount_tab([5 + 50,  - case_spacing, 0], 110);
-        mount_tab([5, box_l + case_spacing, 0], 290);
-        mount_tab([5 + 50, box_l + case_spacing, 0], 250);
+        mount_tab([5 + extrusion_spacing,  - case_spacing, 0], 110);
+        //mount_tab([5, box_l + case_spacing, 0], 290); // Comment this one out if the M5 bolt impedes the micro-usb connector (or just don't put a bolt there)
+        mount_tab([5 + extrusion_spacing, box_l + case_spacing, 0], 250);
         // Side bolts
         translate([-4, box_l - 10, 0]) screw_tab(8, side_screw_size, 4, casesplit);
         translate([box_w + 4, 10, 0]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, casesplit);
@@ -715,8 +716,8 @@ module draw_case(bottom, top) {
     if (top == 1)
     {
         // Side bolts
-        translate([-4, box_l - 10, box_h - casesplit]) screw_tab(8, side_screw_size, 4, casesplit);
-        translate([box_w + 4, 10, box_h - casesplit]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, casesplit);
+        translate([-4, box_l - 10, casesplit]) screw_tab(8, side_screw_size, 4, Chdmi_h);
+        translate([box_w + 4, 10, casesplit]) rotate(a=180, v=[0, 0, 1]) screw_tab(8, side_screw_size, 4, Chdmi_h);
     }
 
     difference() {
